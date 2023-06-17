@@ -1,17 +1,16 @@
+import implementations.Queue;
+import implementations.SinglyLinkedList;
 import implementations.Stack;
 
 public class Main {
 	public static void main(String[] args) {
-		Stack<Integer> stack = new Stack<>();
+		SinglyLinkedList<Integer> ints = new SinglyLinkedList<>();
+			
+		ints.addFirst(5);
+		ints.addFirst(6);	
+		ints.addFirst(7);
+		
+		System.out.println(ints.getFirst());
 
-		stack.push(5);
-		stack.push(6);
-		stack.push(7);
-
-		System.out.println(stack.peek());
-
-		System.out.println(stack.pop());
-
-		System.out.println(stack.peek());
 	}
 }

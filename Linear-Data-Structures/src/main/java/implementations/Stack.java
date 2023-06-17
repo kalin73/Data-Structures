@@ -9,43 +9,35 @@ public class Stack<E> implements AbstractStack<E> {
 	private int size;
 
 	public Stack() {
+		this.topElement = null;
 		this.size = 0;
 	}
 
 	private final class Node {
 		private E value;
-		private Node prev;
+		private Node next;
 
 		private Node(E value) {
 			this.value = value;
-			this.prev = null;
 		}
 	}
 
 	@Override
 	public void push(E element) {
 		Node node = new Node(element);
-		
-		if (size == 0) {
-			this.topElement = node;
 
-		} else {
+		node.next = this.topElement;
+		this.topElement = node;
 
-			node.prev = this.topElement;
-			this.topElement = node;
-
-		}
 		size++;
 	}
 
 	@Override
 	public E pop() {
-		if (this.isEmpty()) {
-			throw new IllegalStateException("You can't remove elements from empty stack!");
-		}
+		ensureNonEmpty();
 
 		E removedElement = topElement.value;
-		this.topElement = this.topElement.prev;
+		this.topElement = this.topElement.next;
 		size--;
 
 		return removedElement;
@@ -53,9 +45,7 @@ public class Stack<E> implements AbstractStack<E> {
 
 	@Override
 	public E peek() {
-		if (isEmpty()) {
-			throw new IllegalStateException("You can't peek empty stack!");
-		}
+		ensureNonEmpty();
 
 		return this.topElement.value;
 	}
@@ -76,20 +66,26 @@ public class Stack<E> implements AbstractStack<E> {
 	}
 
 	private final class StackIterator implements Iterator<E> {
-		Node top = topElement;
+		private Node top = topElement;
 
 		@Override
 		public boolean hasNext() {
-			return top.prev != null;
+			return top != null;
 		}
 
 		@Override
 		public E next() {
 			E val = top.value;
-			top = top.prev;
-			
+			this.top = top.next;
+
 			return val;
 		}
 
+	}
+
+	private void ensureNonEmpty() {
+		if (this.isEmpty()) {
+			throw new IllegalStateException("You can't remove elements from empty stack!");
+		}
 	}
 }
