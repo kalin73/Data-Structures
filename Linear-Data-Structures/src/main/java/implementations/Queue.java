@@ -44,6 +44,10 @@ public class Queue<E> implements AbstractQueue<E> {
 		E removedElement = head.value;
 		this.head = head.next;
 
+		if (size == 1) {
+			this.tail = null;
+		}
+
 		size--;
 
 		return removedElement;
