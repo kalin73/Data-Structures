@@ -36,13 +36,20 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
 	@Override
 	public void addLast(E element) {
 		Node newNode = new Node(element);
-
-		Node currNode = first;
-
-		while (currNode.next != null) {
-			currNode = currNode.next;
+		
+		if (size == 0) {
+			this.first = newNode;
+			
+		} else {
+			Node currNode = first;
+			
+			while (currNode.next != null) {
+				currNode = currNode.next;
+			}
+			currNode.next = newNode;
+			
 		}
-		currNode.next = newNode;
+		this.size++;
 	}
 
 	@Override
@@ -52,7 +59,7 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
 		E value = first.value;
 		this.first = first.next;
 
-		size--;
+		this.size--;
 
 		return value;
 	}
@@ -62,16 +69,18 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
 		ensureNonEmpty("remove");
 
 		Node currNode = first;
+		
 
-		while (currNode.next != null) {
+		while (currNode.next.next != null) {
 			currNode = currNode.next;
 		}
-		E value = currNode.value;
-		
-		currNode = null;
 
-		size--;
-		
+		E value = currNode.next.value;
+
+		currNode.next = null;
+
+		this.size--;
+
 		return value;
 	}
 
@@ -97,12 +106,12 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
 
 	@Override
 	public int size() {
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return this.size == 0;
 	}
 
 	@Override
