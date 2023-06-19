@@ -188,7 +188,12 @@ public class ArrayDeque<E> implements Deque<E> {
 		}
 
 		E element = this.getAtIndex(head);
-		this.elements[this.head++] = null;
+		this.elements[this.head] = null;
+
+		if (this.size > 1) {
+			this.head++;
+
+		}
 		this.size--;
 
 		return element;
@@ -200,7 +205,12 @@ public class ArrayDeque<E> implements Deque<E> {
 			return null;
 		}
 		E element = this.getAtIndex(this.tail);
-		elements[this.tail--] = null;
+		elements[this.tail] = null;
+
+		if (this.size > 1) {
+			this.tail++;
+
+		}
 		size--;
 
 		return element;
@@ -309,7 +319,7 @@ public class ArrayDeque<E> implements Deque<E> {
 		for (int i = this.head; i < index; i++) {
 			this.elements[i] = this.elements[i + 1];
 		}
-		
+
 		this.elements[index] = element;
 		this.addFirst(firstElement);
 	}
