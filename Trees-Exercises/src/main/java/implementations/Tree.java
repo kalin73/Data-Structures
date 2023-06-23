@@ -3,6 +3,7 @@ package implementations;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import interfaces.AbstractTree;
 
@@ -94,12 +95,37 @@ public class Tree<E> implements AbstractTree<E> {
 
 	@Override
 	public List<E> getMiddleKeys() {
-		return null;
+		List<Tree<E>> collection = new ArrayList<>();
+		List<E> result = new ArrayList<>();
+
+		traverseTreeWithRecurrance(collection, this);
+
+		result = collection.stream().filter(x -> x.parent != null && !x.children.isEmpty()).map(Tree::getKey)
+				.collect(Collectors.toList());
+
+		return result;
+	}
+
+	private void traverseTreeWithRecurrance(List<Tree<E>> collection, Tree<E> tree) {
+		collection.add(tree);
+		for (Tree<E> child : tree.children) {
+			traverseTreeWithRecurrance(collection, child);
+		}
 	}
 
 	@Override
 	public Tree<E> getDeepestLeftmostNode() {
-		return null;
+		return doDfs(this);
+	}
+
+	private Tree<E> doDfs(Tree<E> tree) {
+		Tree<E> node = tree;
+
+		while (!node.children.isEmpty()) {
+			node = node.children.get(0);
+		}
+
+		return node;
 	}
 
 	@Override
