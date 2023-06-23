@@ -1,5 +1,20 @@
-public class Main {
-    public static void main(String[] args) {
+import java.util.List;
 
-    }
+import implementations.Tree;
+import implementations.TreeFactory;
+
+public class Main {
+	public static void main(String[] args) {
+
+		String[] input = { "7 19", "7 21", "7 14", "19 1", "19 12", "19 31", "14 23", "14 6" };
+		TreeFactory treeFactory = new TreeFactory();
+		Tree<Integer> tree = treeFactory.createTreeFromStrings(input);
+
+		List<List<Integer>> lists = tree.pathsWithGivenSum(27);
+
+		List<List<Integer>> expected = List.of(List.of(7, 19, 1), List.of(7, 14, 6));
+
+		System.out.println(lists.size());
+
+	}
 }

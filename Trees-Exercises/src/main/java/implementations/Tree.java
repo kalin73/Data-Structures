@@ -2,6 +2,7 @@ package implementations;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -168,12 +169,71 @@ public class Tree<E> implements AbstractTree<E> {
 
 	@Override
 	public List<E> getLongestPath() {
-		return null;
+		List<E> longest = new ArrayList<>();
+		int[] currMax = { 0 };
+
+		findLongestPathWithDFS(longest, currMax, 0, this);
+
+		Collections.reverse(longest);
+
+		return longest;
+	}
+
+	private void findLongestPathWithDFS(List<E> longest, int[] max, int currMax, Tree<E> node) {
+		if (max[0] < currMax && node.children.isEmpty()) {
+			max[0] = currMax;
+			longest.clear();
+
+			while (node != null) {
+				longest.add(node.value);
+				node = node.parent;
+			}
+
+			return;
+		}
+
+		for (Tree<E> child : node.children) {
+			findLongestPathWithDFS(longest, max, currMax + 1, child);
+		}
+
 	}
 
 	@Override
 	public List<List<E>> pathsWithGivenSum(int sum) {
-		return null;
+		List<List<E>> paths = new ArrayList<>();
+		int[] currSum = { 0 };
+
+		findPathsWithGivenSumDFS(paths, currSum, sum, this);
+
+		for (List<E> list : paths) {
+			Collections.reverse(list);
+		}
+
+		return paths;
+	}
+
+	private void findPathsWithGivenSumDFS(List<List<E>> paths, int[] currSum, int sum, Tree<E> node) {
+		int value = (int) node.value;
+		currSum[0] += value;
+
+		if (currSum[0] == sum) {
+			List<E> path = new ArrayList<>();
+			currSum[0] = 0;
+
+			while (node != null) {
+				path.add(node.value);
+				node = node.parent;
+			}
+
+			paths.add(path);
+
+			return;
+		}
+
+		for (Tree<E> child : node.children) {
+			findPathsWithGivenSumDFS(paths, currSum, sum, child);
+		}
+	
 	}
 
 	@Override
