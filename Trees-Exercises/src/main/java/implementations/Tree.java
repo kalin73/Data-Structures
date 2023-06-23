@@ -1,66 +1,94 @@
 package implementations;
 
-import interfaces.AbstractTree;
-
+import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.AbstractTree;
+
 public class Tree<E> implements AbstractTree<E> {
+	private Tree<E> parent;
+	private List<Tree<E>> children;
+	private E value;
 
-    @Override
-    public void setParent(Tree<E> parent) {
+	public Tree(E value) {
+		this.value = value;
+		this.children = new ArrayList<>();
+	}
 
-    }
+	@Override
+	public void setParent(Tree<E> parent) {
+		this.parent = parent;
+	}
 
-    @Override
-    public void addChild(Tree<E> child) {
+	@Override
+	public void addChild(Tree<E> child) {
+		this.children.add(child);
+	}
 
-    }
+	@Override
+	public Tree<E> getParent() {
+		return this.parent;
+	}
 
-    @Override
-    public Tree<E> getParent() {
-        return null;
-    }
+	@Override
+	public E getKey() {
+		return this.value;
+	}
 
-    @Override
-    public E getKey() {
-        return null;
-    }
+	@Override
+	public String getAsString() {
+		StringBuilder sb = new StringBuilder();
 
-    @Override
-    public String getAsString() {
-        return null;
-    }
+		traverseTreeWithRecurance(sb, 0, this);
 
-    @Override
-    public List<E> getLeafKeys() {
-        return null;
-    }
+		return sb.toString().trim();
+	}
 
-    @Override
-    public List<E> getMiddleKeys() {
-        return null;
-    }
+	private void traverseTreeWithRecurance(StringBuilder builder, int indent, Tree<E> tree) {
+		builder.append(this.getPadding(indent)).append(tree.getKey()).append(System.lineSeparator());
 
-    @Override
-    public Tree<E> getDeepestLeftmostNode() {
-        return null;
-    }
+		for (Tree<E> child : tree.children) {
+			traverseTreeWithRecurance(builder, indent + 2, child);
+		}
+	}
 
-    @Override
-    public List<E> getLongestPath() {
-        return null;
-    }
+	private String getPadding(int size) {
+		StringBuilder builder = new StringBuilder();
 
-    @Override
-    public List<List<E>> pathsWithGivenSum(int sum) {
-        return null;
-    }
+		for (int i = 0; i < size; i++) {
+			builder.append(" ");
+		}
 
-    @Override
-    public List<Tree<E>> subTreesWithGivenSum(int sum) {
-        return null;
-    }
+		return builder.toString();
+	}
+
+	@Override
+	public List<E> getLeafKeys() {
+		return null;
+	}
+
+	@Override
+	public List<E> getMiddleKeys() {
+		return null;
+	}
+
+	@Override
+	public Tree<E> getDeepestLeftmostNode() {
+		return null;
+	}
+
+	@Override
+	public List<E> getLongestPath() {
+		return null;
+	}
+
+	@Override
+	public List<List<E>> pathsWithGivenSum(int sum) {
+		return null;
+	}
+
+	@Override
+	public List<Tree<E>> subTreesWithGivenSum(int sum) {
+		return null;
+	}
 }
-
-
-
