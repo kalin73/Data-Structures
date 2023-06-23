@@ -1,7 +1,5 @@
 package implementations;
 
-import java.util.ArrayDeque;
-
 public class TheMatrix {
 	private char[][] matrix;
 	private char fillChar;
@@ -18,37 +16,38 @@ public class TheMatrix {
 	}
 
 	public void solve() {
-		// fillMatrix(this.startRow, this.startCol);
-		ArrayDeque<int[]> coordinates = new ArrayDeque<>();
+		fillMatrix(this.startRow, this.startCol);
+//		ArrayDeque<int[]> coordinates = new ArrayDeque<>();
+//
+//		coordinates.offer(new int[] { startRow, startCol });
+//
+//		while (!coordinates.isEmpty()) {
+//			int[] position = coordinates.poll();
+//
+//			int row = position[0];
+//			int col = position[1];
+//
+//			this.matrix[row][col] = this.fillChar;
+//
+//			if (isValidChar(row + 1, col)) {
+//				coordinates.offer(new int[] { row + 1, col });
+//
+//			}
+//			if (isValidChar(row, col + 1)) {
+//				coordinates.offer(new int[] { row, col + 1 });
+//
+//			}
+//			if (isValidChar(row - 1, col)) {
+//				coordinates.offer(new int[] { row - 1, col });
+//
+//			}
+//			if (isValidChar(row, col - 1)) {
+//				coordinates.offer(new int[] { row, col - 1 });
+//
+//			}
+//
+//		}
 
-		coordinates.offer(new int[] { startRow, startCol });
-
-		while (!coordinates.isEmpty()) {
-			int[] position = coordinates.poll();
-
-			int row = position[0];
-			int col = position[1];
-
-			this.matrix[row][col] = this.fillChar;
-
-			if (isValidChar(row + 1, col)) {
-				coordinates.offer(new int[] { row + 1, col });
-
-			}
-			if (isValidChar(row, col + 1)) {
-				coordinates.offer(new int[] { row, col + 1 });
-
-			}
-			if (isValidChar(row - 1, col)) {
-				coordinates.offer(new int[] { row - 1, col });
-
-			}
-			if (isValidChar(row, col - 1)) {
-				coordinates.offer(new int[] { row, col - 1 });
-
-			}
-
-		}
 	}
 
 	private void fillMatrix(int row, int col) {
