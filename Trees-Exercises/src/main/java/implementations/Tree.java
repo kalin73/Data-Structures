@@ -39,16 +39,16 @@ public class Tree<E> implements AbstractTree<E> {
 	public String getAsString() {
 		StringBuilder sb = new StringBuilder();
 
-		traverseTreeWithRecurance(sb, 0, this);
+		traverseTreeWithRecurrance(sb, 0, this);
 
 		return sb.toString().trim();
 	}
 
-	private void traverseTreeWithRecurance(StringBuilder builder, int indent, Tree<E> tree) {
+	private void traverseTreeWithRecurrance(StringBuilder builder, int indent, Tree<E> tree) {
 		builder.append(this.getPadding(indent)).append(tree.getKey()).append(System.lineSeparator());
 
 		for (Tree<E> child : tree.children) {
-			traverseTreeWithRecurance(builder, indent + 2, child);
+			traverseTreeWithRecurrance(builder, indent + 2, child);
 		}
 	}
 
