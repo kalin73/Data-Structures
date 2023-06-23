@@ -218,7 +218,7 @@ public class Tree<E> implements AbstractTree<E> {
 
 		if (currSum[0] == sum) {
 			List<E> path = new ArrayList<>();
-			currSum[0] = 0;
+			currSum[0] -= value;
 
 			while (node != null) {
 				path.add(node.value);
@@ -233,7 +233,7 @@ public class Tree<E> implements AbstractTree<E> {
 		for (Tree<E> child : node.children) {
 			findPathsWithGivenSumDFS(paths, currSum, sum, child);
 		}
-	
+		currSum[0] -= value;
 	}
 
 	@Override
