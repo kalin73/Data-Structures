@@ -115,17 +115,55 @@ public class Tree<E> implements AbstractTree<E> {
 
 	@Override
 	public Tree<E> getDeepestLeftmostNode() {
-		return doDfs(this);
-	}
+		Tree<E> deepestNode = null;
+		List<Tree<E>> leafes = getAllLeafes();
+		int maxPath = 0;
 
-	private Tree<E> doDfs(Tree<E> tree) {
-		Tree<E> node = tree;
+		for (Tree<E> leafe : leafes) {
+			int currentPath = getStepsFromLeafeToRoot(leafe);
 
-		while (!node.children.isEmpty()) {
-			node = node.children.get(0);
+			if (maxPath < currentPath) {
+				deepestNode = leafe;
+				maxPath = currentPath;
+			}
+
 		}
 
-		return node;
+		return deepestNode;
+	}
+
+	private int getStepsFromLeafeToRoot(Tree<E> leafe) {
+		int path = 0;
+
+		while (leafe.parent != null) {
+			leafe = leafe.parent;
+			path++;
+		}
+
+		return path;
+	}
+
+	private List<Tree<E>> getAllLeafes() {
+		List<Tree<E>> leafes = new ArrayList<>();
+
+		ArrayDeque<Tree<E>> queue = new ArrayDeque<>();
+
+		queue.offer(this);
+
+		while (!queue.isEmpty()) {
+			Tree<E> currNode = queue.poll();
+
+			if (currNode.children.isEmpty()) {
+				leafes.add(currNode);
+			}
+
+			for (Tree<E> child : currNode.children) {
+				queue.offer(child);
+			}
+
+		}
+
+		return leafes;
 	}
 
 	@Override
