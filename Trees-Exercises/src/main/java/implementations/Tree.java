@@ -1,6 +1,8 @@
 package implementations;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import interfaces.AbstractTree;
@@ -64,7 +66,31 @@ public class Tree<E> implements AbstractTree<E> {
 
 	@Override
 	public List<E> getLeafKeys() {
-		return null;
+		List<E> leafKeys = getAllLeafesWithBfs();
+
+		return leafKeys;
+	}
+
+	private List<E> getAllLeafesWithBfs() {
+		List<E> leafKeys = new ArrayList<>();
+
+		ArrayDeque<Tree<E>> queue = new ArrayDeque<>();
+		queue.offer(this);
+
+		while (!queue.isEmpty()) {
+			Tree<E> node = queue.poll();
+
+			for (Tree<E> child : node.children) {
+				queue.offer(child);
+			}
+
+			if (node.children.isEmpty()) {
+				leafKeys.add(node.value);
+			}
+
+		}
+
+		return leafKeys;
 	}
 
 	@Override
