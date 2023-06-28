@@ -39,19 +39,19 @@ public class BinaryTree {
 	}
 
 	private void findNodePath(BinaryTree binaryTree, int element, List<Integer> result) {
-		if(binaryTree == null) {
+		if (binaryTree == null) {
 			return;
 		}
-		
-		if(binaryTree.key == element) {
+
+		if (binaryTree.key == element) {
 			return;
 		}
-		
+
 		result.add(binaryTree.key);
-		
+
 		findNodePath(binaryTree.left, element, result);
 		findNodePath(binaryTree.right, element, result);
-		
+
 	}
 
 	public List<Integer> topView() {
