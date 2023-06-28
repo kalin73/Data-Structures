@@ -23,7 +23,7 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
 	public void add(E element) {
 		this.data.add(element);
 
-		this.heapifyUp();
+		this.heapifyUp(this.size() - 1);
 	}
 
 	@Override
@@ -66,21 +66,18 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
 
 	}
 
-	private int getLeftChildIndex(int index) {
-		return 2 * index + 1;
-	}
-
-	private int getRightChildIndex(int index) {
-		return 2 * index + 2;
-	}
-
 	@Override
 	public void decrease(E element) {
+		int elementIndex = this.data.indexOf(element);
+
+		E heapElement = this.data.get(elementIndex);
+		heapElement.decrease();
+
+		this.heapifyUp(elementIndex);
 
 	}
 
-	private void heapifyUp() {
-		int index = this.data.size() - 1;
+	private void heapifyUp(int index) {
 		int parentIndex = this.getParentIndex(index);
 
 		while (index > 0 && isLess(index, parentIndex)) {
@@ -104,5 +101,13 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
 			throw new IllegalStateException();
 		}
 
+	}
+
+	private int getLeftChildIndex(int index) {
+		return 2 * index + 1;
+	}
+
+	private int getRightChildIndex(int index) {
+		return 2 * index + 2;
 	}
 }
