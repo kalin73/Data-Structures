@@ -46,14 +46,14 @@ public class ArrayList<E> implements List<E> {
 	public E get(int index) {
 		isIndexValid(index);
 
-		return (E) this.elements[index];
+		return getAtIndex(index);
 	}
 
 	@Override
 	public E set(int index, E element) {
 		isIndexValid(index);
 
-		E prevElement = (E) elements[index];
+		E prevElement = getAtIndex(index);
 		this.elements[index] = element;
 
 		return prevElement;
@@ -63,7 +63,7 @@ public class ArrayList<E> implements List<E> {
 	public E remove(int index) {
 		isIndexValid(index);
 
-		E removedElement = (E) this.elements[index];
+		E removedElement = getAtIndex(index);
 
 		this.elements[index] = null;
 		if (index < size - 1) {
@@ -129,7 +129,7 @@ public class ArrayList<E> implements List<E> {
 
 		@Override
 		public E next() {
-			return (E) elements[index++];
+			return getAtIndex(index++);
 		}
 
 	}
@@ -160,5 +160,10 @@ public class ArrayList<E> implements List<E> {
 			elements[i] = elements[i + 1];
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	private E getAtIndex(int index) {
+		return (E) this.elements[index];
 	}
 }
